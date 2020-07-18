@@ -1,5 +1,6 @@
 package StringMethods;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -30,15 +31,34 @@ Character.getNumericValue(char c);
 
 public class StringMethods {
 
+
 	// Given Strings s1 and s2, return the longer String
 	public static String longerString(String s1, String s2) {
-		return null;
+		if(s1.length()>s2.length()) {
+			return s1;
+		}
+		return s2;
+		
 	}
 
 	
 	// if String s contains the word "underscores", change all of the spaces to underscores
 	public static String formatSpaces(String s) {
-		return null;
+		if(s.contains("underscores")) {
+			String underscores = "";
+			for( int i = 0; i<s.length();i++) {
+				String letter = "";
+				letter+=s.charAt(i);
+				if(letter.equals(" ")) {
+					underscores+="_";
+				}
+				else {
+					underscores += letter;
+				}
+			}
+			return underscores;
+		}
+		return s;
 	}
 
 	
@@ -46,18 +66,86 @@ public class StringMethods {
 	// You cannot assume there are no extra spaces around the name, but you can
 	// assume there is only one space between the first and last name
 	public static String lineLeader(String s1, String s2, String s3) {
+		String[] person1 = s1.split(" ");
+		String[] person2 = s2.split(" ");
+		String[] person3 = s3.split(" ");
+		char[] char1 = person1[person1.length-1].toCharArray();
+		char[] char2 = person2[person2.length-1].toCharArray();
+		char[] char3 = person3[person3.length-1].toCharArray();
+		String winner = "";
+		if(char1[char1.length-1]<char2[char2.length-1] && char1[char1.length-1]<char3[char3.length-1]) {
+			for(int i = 0; i<person1.length;i++) {
+				if(i==person1.length-1) {
+					winner+= " ";
+				}
+				winner+= person1[i];
+			}
+			
+			return winner;
+		}
+		if(char2[char2.length-1]<char1[char1.length-1] && char2[char2.length-1]<char3[char3.length-1]) {
+			for(int i = 0; i<person2.length;i++) {
+				if(i==person2.length-1) {
+					winner+= " ";
+				}
+				winner+= person2[i];
+			}
+			
+			return winner;
+		}
+		if(char3[char3.length-1]<char1[char1.length-1] && char3[char3.length-1]<char2[char2.length-1]) {
+			for(int i = 0; i<person3.length;i++) {
+				if(i==person3.length-1) {
+					winner+= " ";
+				}
+				winner+= person3[i];
+			}
+			
+			return winner;
+		}
 		return null;
 	}
 	
 	
 	// Return the sum of all numerical digits in the String
 	public static int numeralSum(String s) {
-		return 0;
+		ArrayList <Integer> intArray = new ArrayList <Integer>();
+		for( int i = 0; i<s.length();i++) {
+			String num = ""+s.charAt(i);
+			if(num.equals("0")||num.equals("1")||num.equals("2")||num.equals("3")||num.equals("4")||num.equals("5")||num.equals("9")||num.equals("6")||num.equals("7")||num.equals("8")) {
+				intArray.add(Integer.parseInt(num));
+			}
+		}
+		int sum = 0;
+		for(int i = 0; i<intArray.size();i++) {
+			sum+=intArray.get(i);
+		}
+		return sum;
 	}
 	
 	
 	// Return the number of times String substring appears in String s
 	public static int substringCount(String s, String substring) {
+		if(s.contains(substring)) {
+			int times = 0;
+			for( int i = 0; i<s.length();i++) {
+				String section = "";
+				if(i!=0) {
+					 section = s.substring(i);
+				}
+				else {
+					section = s.substring(0, substring.length());
+				}
+				String cutout = "";
+				for (int j = 0; j < section.length(); j++) {
+					cutout+=section.charAt(j);
+				}
+				if(cutout.equals(substring)) {
+					times++;
+				}
+			}
+			return times+1;
+		}
 		return 0;
 	}
 

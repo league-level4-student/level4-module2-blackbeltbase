@@ -170,7 +170,6 @@ public class StringMethods {
 		if(substring.length()>1) {
 		String[] split = s.split(" ");
 		int times = 0;
-		System.out.println(split.length);
 		for(int i = 0;i<split.length;i++) {
 			if(split[i].contains(substring)) {
 				times++;
@@ -181,7 +180,6 @@ public class StringMethods {
 		else {
 			int times = 0;
 			String[] split = s.split(" ");
-			System.out.println(split.length);
 			for(int i = 0;i<split.length;i++) {
 				if(split[i].lastIndexOf(substring)==split[i].length()-1) {
 					times++;
@@ -206,23 +204,20 @@ public class StringMethods {
 	// palindromes are words or phrases are read the same forward as backward.
 	// HINT: ignore/remove all punctuation and spaces in the String
 	public static boolean palindrome(String s) {
-		String lowered = s.toLowerCase();
-		String noSpace = lowered.trim();
-		String noComma = noSpace.replaceAll(",", "");
-		String noPeriod = noComma.replaceAll(".", "");
-		String noQuestion = noPeriod.replaceAll("?", "");
-		String noColon = noQuestion.replaceAll(":", "");
-		String product = noColon;
-		boolean isDrome= true;
+		String product = s.toLowerCase();
+		product = product.replace(".","");
+		product = product.replace(":","");
+		product = product.replace(",","");
+		product = product.replace(" ","");
+		product = product.replace("?","");
 	   for( int i = 0; i<product.length()/2;i++) {
 		 String first = ""+product.charAt(i);
 		 String last = "" +product.charAt(product.length()-1-i);
-		 if(first.equals(last)==false) {
-			 isDrome = false;
-			 break;
+		 if(first.equalsIgnoreCase(last)==false) {
+			return false;
 		 }
 	   }
-		return isDrome;
+		return true;
 	}
 	
 }

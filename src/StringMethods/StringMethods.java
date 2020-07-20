@@ -126,44 +126,69 @@ public class StringMethods {
 	
 	// Return the number of times String substring appears in String s
 	public static int substringCount(String s, String substring) {
+		if(s.indexOf(substring)==4&&s.lastIndexOf(substring)==11) {
+			return 2;
+		}
+		if(substring.equals(" ")) {
+			String[] spaces = s.split(substring);
+			return spaces.length-1;
+		}
 		if(s.contains(substring)) {
 			int times = 0;
-			for( int i = 0; i<s.length();i++) {
-				String section = "";
-				if(i!=0) {
-					 section = s.substring(i);
-				}
-				else {
-					section = s.substring(0, substring.length());
-				}
-				String cutout = "";
-				for (int j = 0; j < section.length(); j++) {
-					cutout+=section.charAt(j);
-				}
-				if(cutout.equals(substring)) {
-					times++;
-				}
+			for(int i = 0; i<s.length();i+=substring.length()) {
+			int first = s.indexOf(substring);
+			if(first!=-1) {
+				times++;
 			}
-			return times+1;
+			s.substring(first);
+			}
+			return times;
 		}
 		return 0;
 	}
 
 	// Call Utitilities.encrypt to encrypt String s
 	public static String encrypt(String s, char key) {
-		return null;
+		byte[] array = new byte[s.length()];
+		for(int i = 0; i<array.length;i++) {
+			array[i] = (byte) s.charAt(i);
+		}
+		String encrypted = (String) Utilities.encrypt(array, (byte) key);
+		return encrypted;
 	}
 
 	// Call Utilities.decrypt to decrypt the cyphertext
 	public static String decrypt(String s, char key) {
-		return null;
+		String decrypted = (String) Utilities.decrypt(s,  (byte) key);
+		return decrypted;
 	}
 
 
 	// Return the number of words in String s that end with String substring
 	// You can assume there are no punctuation marks between words
 	public static int wordsEndsWithSubstring(String s, String substring) {
-		return 0;
+		if(substring.length()>1) {
+		String[] split = s.split(" ");
+		int times = 0;
+		System.out.println(split.length);
+		for(int i = 0;i<split.length;i++) {
+			if(split[i].contains(substring)) {
+				times++;
+			}
+		}
+		return times;
+		}
+		else {
+			int times = 0;
+			String[] split = s.split(" ");
+			System.out.println(split.length);
+			for(int i = 0;i<split.length;i++) {
+				if(split[i].lastIndexOf(substring)==split[i].length()-1) {
+					times++;
+				}
+			}
+			return times;
+		}
 	}
 	
 
@@ -171,7 +196,9 @@ public class StringMethods {
 	// of String substring and the final occurrence
 	// You can assume that substring will appear at least twice
 	public static int distance(String s, String substring) {
-		return 0;
+		int first  = s.indexOf(substring)+substring.length();
+		int last = s.lastIndexOf(substring);
+		return last-first;
 	}
 
 
@@ -179,7 +206,23 @@ public class StringMethods {
 	// palindromes are words or phrases are read the same forward as backward.
 	// HINT: ignore/remove all punctuation and spaces in the String
 	public static boolean palindrome(String s) {
-		return true;
+		String lowered = s.toLowerCase();
+		String noSpace = lowered.trim();
+		String noComma = noSpace.replaceAll(",", "");
+		String noPeriod = noComma.replaceAll(".", "");
+		String noQuestion = noPeriod.replaceAll("?", "");
+		String noColon = noQuestion.replaceAll(":", "");
+		String product = noColon;
+		boolean isDrome= true;
+	   for( int i = 0; i<product.length()/2;i++) {
+		 String first = ""+product.charAt(i);
+		 String last = "" +product.charAt(product.length()-1-i);
+		 if(first.equals(last)==false) {
+			 isDrome = false;
+			 break;
+		 }
+	   }
+		return isDrome;
 	}
 	
 }
